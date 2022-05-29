@@ -31,6 +31,8 @@ window.Android = {
 };
 ```
 
+Finding the webapp data is trivial once the Android application has been unpacked and is left as an exercise to the reader. It's worth noting that the WebView seems to inject a few JS libraries at runtime (outside of the `index.html`) such as `playAPI.js` and the Phaser framework libraries, which can be found in a common libraries folder, also left as an exercise to the reaser. These will need to be manually included in the index file to run properly in a browser.
+
 ### `log`: Datalogging on actual hardware
 
 The app can also be repacked with a slightly different injected script to allow the app running on actual hardware to log all interactions between PlayAPI and the native application (useful for getting sample data at parks, for beacons, etc)
