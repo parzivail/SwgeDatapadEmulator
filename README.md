@@ -3,12 +3,22 @@ Managed package that emulates the Disney PlayAPI backend used by the Play Disney
 
 ## `SwgeDatapadEmulator` project
 
+The program requires 3 arguments:
+
+1) The IP address of the network device the WebSocket should operate on
+2) The path where `fullchain.pem` and `privkey.pem` can be found, required to run a SSL-enabled WebSocket
+3) The operating mode, either `log` or `emulate`
+
+Example: `SwgeDatapadEmulator.exe "192.168.1.8" "C:\Certbot\live\example.com" log`
+
+**Important**: the WebSocket implementation used by the WebView hosting the Datapad can only make secure WebSocket connections. This requires a domain name and valid SSL certificate on the listening server. For simplicity, the entire app has been set up to use and require SSL.
+
+### `emulate`: Emulating the API while running in the browser
+
 Inject the following JavaScript snippit into the Datapad frontend to allow the API commands to be handled over the websocket:
 
-### Emulating the API while running in the browser
-
 ```javascript
-const _interopSocket = new WebSocket('ws://localhost:7777');
+const _interopSocket = new WebSocket('wss://YOUR_DOMAIN_NAME.com:7777');
 
 _interopSocket.addEventListener('message', function (message) {
 	PlayAPI.handlePromiseReponse(message.data)
@@ -21,11 +31,9 @@ window.Android = {
 };
 ```
 
-### Datalogging on actual hardware
+### `log`: Datalogging on actual hardware
 
 The app can also be repacked with a slightly different injected script to allow the app running on actual hardware to log all interactions between PlayAPI and the native application (useful for getting sample data at parks, for beacons, etc)
-
-**Important**: the WebSocket implementation used by the WebView hosting the Datapad can only make secure WebSocket connections. This requires a domain name and valid SSL certificate on the listening server.
 
 ```javascript
 const _interopSocket = new WebSocket('wss://YOUR_DOMAIN_NAME.com:7777');

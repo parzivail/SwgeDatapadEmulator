@@ -227,9 +227,9 @@ public class Program
 	{
 		OutFile = new FileStream("out.jsonl", FileMode.Append, FileAccess.Write, FileShare.Read);
 
-		var cert = X509Certificate2.CreateFromPemFile(Path.Combine(args[0], "fullchain.pem"), Path.Combine(args[0], "privkey.pem"));
+		var cert = X509Certificate2.CreateFromPemFile(Path.Combine(args[1], "fullchain.pem"), Path.Combine(args[1], "privkey.pem"));
 
-		var wss = new WebSocketServer(IPAddress.Parse("192.168.1.8"), 7777, true)
+		var wss = new WebSocketServer(IPAddress.Parse(args[0]), 7777, true)
 		{
 			SslConfiguration =
 			{
@@ -237,7 +237,10 @@ public class Program
 			}
 		};
 
-		wss.AddWebSocketService<DatapadLogger>("/");
+		if (args[2] == "log")
+			wss.AddWebSocketService<DatapadLogger>("/");
+		else if (args[2] == "emulate")
+			wss.AddWebSocketService<DatapadWsInterop>("/");
 
 		wss.Start();
 		Lumberjack.Logger.Info("Websocket started");
