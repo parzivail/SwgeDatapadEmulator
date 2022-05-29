@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Nodes;
+using SwgeChatbotParser.Model;
 
 namespace SwgeChatbotParser;
 
@@ -33,13 +34,23 @@ public class GameContentLoader
 		return data.Values.ToArray();
 	}
 
-	public Dictionary<string, KeyValuePair<Typed, JsonObject>> GetMissions()
+	public Dictionary<string, Typed> GetMissions()
 	{
-		var entries = GetGameContent<JsonObject>("mission-data");
+		return GetTypedData("mission-data");
+	}
+
+	public Dictionary<string, Typed> GetChats()
+	{
+		return GetTypedData("chat-data");
+	}
+
+	private Dictionary<string, Typed> GetTypedData(string key)
+	{
+		var entries = GetGameContent<JsonObject>(key);
 		return entries
-			.Select(o => new KeyValuePair<Typed, JsonObject>(o.Deserialize<Typed>() ?? throw new InvalidDataException("Data did not extend Typed"), o))
+			.Select(o => ChatParser.Parse((o.Deserialize<Typed>() ?? throw new InvalidDataException("Data did not extend Typed")).Type, o))
 			.ToDictionary(
-				data => data.Key.Id ?? throw new InvalidDataException("Typed did not have ID"),
+				data => data.Id ?? throw new InvalidDataException("Typed did not have ID"),
 				data => data
 			);
 	}

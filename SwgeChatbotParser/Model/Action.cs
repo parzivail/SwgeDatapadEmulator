@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SwgeChatbotParser;
+namespace SwgeChatbotParser.Model;
 
 public class Action : Typed
 {

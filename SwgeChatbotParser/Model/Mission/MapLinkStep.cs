@@ -1,4 +1,4 @@
-﻿namespace SwgeChatbotParser.Model.Steps;
+﻿namespace SwgeChatbotParser.Model.Mission;
 
 public class MapLinkStep : Step
 {

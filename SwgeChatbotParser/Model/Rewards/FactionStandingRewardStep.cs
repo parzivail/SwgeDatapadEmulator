@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
+using SwgeChatbotParser.Model.Mission;
 
-namespace SwgeChatbotParser;
+namespace SwgeChatbotParser.Model.Rewards;
 
 public class FactionStandingRewardStep : Step
 {

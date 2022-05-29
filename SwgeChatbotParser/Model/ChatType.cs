@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace SwgeChatbotParser;
+namespace SwgeChatbotParser.Model;
 
 [JsonConverter(typeof(JsonStringEnumMemberConverter))]
 public enum ChatType
@@ -10,7 +10,7 @@ public enum ChatType
 	[EnumMember(Value = "AudioTranslateStep")] AudioTranslateStep,
 	[EnumMember(Value = "AutoEndMissionStep")] AutoEndMissionStep,
 	[EnumMember(Value = "AutoStartMissionStep")] AutoStartMissionStep,
-	[EnumMember(Value = "ChatStep")] ChatMissionStep,
+	[EnumMember(Value = "ChatStep")] ChatStep,
 	[EnumMember(Value = "DeviceHackStep")] DeviceHackStep,
 	[EnumMember(Value = "DroidHackStep")] DroidHackStep,
 	[EnumMember(Value = "ImageScanStep")] ImageScanStep,
@@ -39,4 +39,20 @@ public enum ChatType
 	[EnumMember(Value = "UnstartablePrecondition")] UnstartablePrecondition,
 	[EnumMember(Value = "VariableCheckPrecondition")] VariableCheckPrecondition,
 	[EnumMember(Value = "ZonePrecondition")] ZonePrecondition,
+	[EnumMember(Value = "Chat")] Chat,
+	[EnumMember(Value = "ChatMessageStep")] ChatMessageStep,
+	[EnumMember(Value = "ChatChooseStep")] ChatChooseStep,
+	[EnumMember(Value = "ChatDecisionStep")] ChatDecisionStep,
+	[EnumMember(Value = "ChatMapLinkStep")] ChatMapLinkStep,
+	[EnumMember(Value = "ChatImageStep")] ChatImageStep,
+	[EnumMember(Value = "ChatDeeplinkStep")] ChatDeeplinkStep,
+	[EnumMember(Value = "ChatPlayerSwitchStep")] ChatPlayerSwitchStep,
+	[EnumMember(Value = "ChatVariableStep")] ChatVariableStep,
+	[EnumMember(Value = "ChatNewStateLinkStep")] ChatNewStateLinkStep,
+	[EnumMember(Value = "ChatShowTransmission")] ChatShowTransmission,
+	[EnumMember(Value = "ToolLaunchStep")] ToolLaunchStep,
+	[EnumMember(Value = "BlockingChatButtonStep")] BlockingChatButtonStep,
+	[EnumMember(Value = "DisambigLaunchStep")] DisambigLaunchStep,
+	[EnumMember(Value = "MissionEndStep")] MissionEndStep,
+	[EnumMember(Value = "ChatToastTextStep")] ChatToastTextStep,
 }

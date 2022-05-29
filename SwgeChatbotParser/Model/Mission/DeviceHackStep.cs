@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SwgeChatbotParser.Model.Steps;
+namespace SwgeChatbotParser.Model.Mission;
 
 public class DeviceHackStep : Step
 {

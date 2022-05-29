@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SwgeChatbotParser.Model.Steps;
+namespace SwgeChatbotParser.Model.Mission;
 
 public class Mission : Action
 {
@@ -22,4 +22,10 @@ public class Mission : Action
 	[JsonPropertyName("imagePath")] public string ImagePath { get; set; }
 	[JsonPropertyName("listPriority")] public int ListPriority { get; set; }
 	[JsonPropertyName("resetOnParkChange")] public bool ResetOnParkChange { get; set; }
+
+	/// <inheritdoc />
+	public override string ToString()
+	{
+		return $"{Faction} Mission: {Name}";
+	}
 }
