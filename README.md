@@ -43,7 +43,7 @@ var _isConnected = false;
 
 _interopSocket.addEventListener('open', function (event) {
 	_isConnected = true;
-    _interopSocket.send(JSON.stringify({
+	_interopSocket.send(JSON.stringify({
 		type: "CONNECT",
 		timestamp: new Date().toISOString()
 	}))
