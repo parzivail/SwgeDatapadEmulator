@@ -11,4 +11,13 @@
       <PackageReference Include="Macross.Json.Extensions" Version="3.0.0-beta1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="ArticyTools">
+        <HintPath>E:\colby\Desktop\ArticyTools.dll</HintPath>
+      </Reference>
+      <Reference Include="ArticyUtils">
+        <HintPath>..\..\..\..\..\Program Files\articy draft 3\bin\ArticyUtils.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

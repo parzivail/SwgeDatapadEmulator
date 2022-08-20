@@ -63,6 +63,102 @@ public class GameContentLoader
 			.ToDictionary(data => data.Id, data => data);
 	}
 
+	public Dictionary<string, IdData> GetItemData()
+	{
+		var entries = GetGameContent<IdDataEntry>("item-data");
+		return entries
+			.Select(entry => new IdData(entry.Id))
+			.ToDictionary(data => data.Id, data => data);
+	}
+
+	public Dictionary<string, IdData> GetBeaconData()
+	{
+		var entries = GetGameContent<IdDataEntry>("beacon-data");
+		return entries
+			.Select(entry => new IdData(entry.Id))
+			.ToDictionary(data => data.Id, data => data);
+	}
+
+	public Dictionary<string, IdData> GetAchievementData()
+	{
+		var entries = GetGameContent<IdDataEntry>("achievement-data");
+		return entries
+			.Select(entry => new IdData(entry.Id))
+			.ToDictionary(data => data.Id, data => data);
+	}
+
+	public Dictionary<string, IdData> GetAudioTranslateShowData()
+	{
+		var entries = GetGameContent<IdDataEntry>("audio-translate-show-data");
+		return entries
+			.Select(entry => new IdData(entry.Id))
+			.ToDictionary(data => data.Id, data => data);
+	}
+
+	public Dictionary<string, IdData> GetImageMarkerData()
+	{
+		var entries = GetGameContent<IdDataEntry>("image-marker-data");
+		return entries
+			.Select(entry => new IdData(entry.Id))
+			.ToDictionary(data => data.Id, data => data);
+	}
+
+	public Dictionary<string, InstallationData> GetInstallationData()
+	{
+		var entries = GetGameContent<InstallationDataEntry>("installation-data");
+		return entries
+			.Select(entry => new InstallationData(entry.Id, Localization[entry.NameKey], Localization[entry.DescKey], entry.Type, entry.DlrThumbnail, entry.DlrThumbnailAltText, entry.WdwThumbnail, entry.WdwThumbnailAltText))
+			.ToDictionary(data => data.Id, data => data);
+	}
+
+	public Dictionary<string, IdData> GetMapData(MapLocation location)
+	{
+		var entries = GetGameContent<IdDataEntry>("map-location-data-" + location.Filename);
+		return entries
+			.Select(entry => new IdData(entry.Id))
+			.ToDictionary(data => data.Id, data => data);
+	}
+
+	public Dictionary<string, IdData> GetMapObjectData(MapLocation location)
+	{
+		var entries = GetGameContent<IdDataEntry>("map-object-data-" + location.Filename);
+		return entries
+			.Select(entry => new IdData(entry.Id))
+			.ToDictionary(data => data.Id, data => data);
+	}
+
+	public Dictionary<string, IdData> GetPushNotificationData()
+	{
+		var entries = GetGameContent<IdDataEntry>("push-notification-data");
+		return entries
+			.Select(entry => new IdData(entry.Id))
+			.ToDictionary(data => data.Id, data => data);
+	}
+
+	public Dictionary<string, IdData> GetStarMapRegionData()
+	{
+		var entries = GetGameContent<IdDataEntry>("star-map-region-data");
+		return entries
+			.Select(entry => new IdData(entry.Id))
+			.ToDictionary(data => data.Id, data => data);
+	}
+
+	public Dictionary<string, IdData> GetTextMarkerData()
+	{
+		var entries = GetGameContent<IdDataEntry>("text-marker-data");
+		return entries
+			.Select(entry => new IdData(entry.Id))
+			.ToDictionary(data => data.Id, data => data);
+	}
+
+	public Dictionary<string, IdData> GetTriggerableShowData()
+	{
+		var entries = GetGameContent<IdDataEntry>("triggerable-show-data");
+		return entries
+			.Select(entry => new IdData(entry.Id))
+			.ToDictionary(data => data.Id, data => data);
+	}
+
 	private Dictionary<string, string> GetLocalizationData()
 	{
 		var pageCountEntries = GetGameContent<Dictionary<string, int>>("page-counts");
@@ -87,6 +183,8 @@ public class GameContentLoader
 
 			ParseNestedLocalizationData(localizationData, localizationPage);
 		}
+
+		localizationData[""] = "<No Localization>";
 
 		return localizationData;
 	}

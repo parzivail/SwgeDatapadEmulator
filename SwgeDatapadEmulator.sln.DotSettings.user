@@ -1,3 +1,7 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CProgram_0020Files_005Carticy_0020draft_00203_005Cbin_005CArticyUtils_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CWindows_005CSysWOW64_005CCertEnroll_002Edll/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CWindows_005CWinSxS_005Camd64_005Fmicrosoft_002Dwindows_002Dx_002E_002Ertificateenrollment_005F31bf3856ad364e35_005F10_002E0_002E19041_002E1620_005Fnone_005F682dd25043fba6e2_005CCertEnroll_002Edll/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CWindows_005CWinSxS_005Camd64_005Fmicrosoft_002Dwindows_002Dx_002E_002Ertificateenrollment_005F31bf3856ad364e35_005F10_002E0_002E19041_002E1620_005Fnone_005F682dd25043fba6e2_005CCertEnroll_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=E_003A_005Ccolby_005CDesktop_005CArticyTools_002Edll/@EntryIndexedValue">True</s:Boolean>
+	
+	</wpf:ResourceDictionary>

@@ -9,11 +9,47 @@ namespace SwgeChatbotParser;
 
 public class Program
 {
+	public enum InstanceType
+	{
+		Temporary,
+		Permanent,
+		SessionData,
+		Fixed,
+		Count,
+		HighestValue = 255
+	}
+
+	public static uint GetUserId(ulong aValue) => (uint)((aValue >> 32) & 0xFFFFFF);
+
+	public static InstanceType GetType(ulong aValue) => (InstanceType)((aValue >> 56) & 0xFF);
+
+	public static uint GetSerial(ulong aValue) => (uint)(aValue & 0xFFFFFFFF);
+
+	public static ulong GetIid(InstanceType aType, uint aUserId, int aSerial)
+	{
+		return (ulong)(((long)aType << 56) + (long)((long)((ulong)aUserId) << 32) + (long)((ulong)aSerial));
+	}
+
+	public record Snowflake(InstanceType Type, uint User, uint Serial);
+
 	public static void Main(string[] args)
 	{
 		var loader = new GameContentLoader(args[0], "starWarsGalaxysEdgeGame", "87");
 		var chats = loader.GetChats();
 		var missions = loader.GetMissions();
+
+		foreach (var (key, data) in loader.GetInstallationData())
+		{
+			if (data.Type != "MidLevelGroupInstallation")
+				continue;
+			Console.WriteLine(data.Id);
+			Console.WriteLine($"- {data.Name}");
+			Console.WriteLine($"- {data.Description}");
+			Console.WriteLine($"- {data.DlrThumbnailAltText}");
+			Console.WriteLine($"- {data.DlrThumbnail}");
+		}
+		
+		return;
 
 		foreach (var (id, chat) in missions.OrderBy(pair => long.Parse(pair.Key)))
 		{

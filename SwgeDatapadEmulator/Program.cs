@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
@@ -204,35 +205,67 @@ public class DatapadWsInterop : WebSocketBehavior
 public class DatapadLogger : WebSocketBehavior
 {
 	/// <inheritdoc />
+	protected override void OnOpen()
+	{
+		Program.DataWriter.Write(DateTime.UtcNow.Ticks);
+		Program.DataWriter.Write((byte)Program.Opcode.Connect);
+	}
+
+	/// <inheritdoc />
 	protected override void OnMessage(MessageEventArgs e)
 	{
 		Console.WriteLine(e.Data.Length > 128 ? e.Data[..128] : e.Data);
-		Program.OutFile.Write(Encoding.UTF8.GetBytes(e.Data));
-		Program.OutFile.WriteByte((byte)'\n');
+		// Program.OutFile.Write(Encoding.UTF8.GetBytes(e.Data));
+		// Program.OutFile.WriteByte((byte)'\n');
+		
+		Program.DataWriter.Write(DateTime.UtcNow.Ticks);
+		Program.DataWriter.Write((byte)Program.Opcode.Data);
+		Program.DataWriter.Write(e.Data);
 	}
 
 	/// <inheritdoc />
 	protected override void OnClose(CloseEventArgs e)
 	{
-		Program.ExitHandle.Set();
+		Program.DataWriter.Write(DateTime.UtcNow.Ticks);
+		Program.DataWriter.Write((byte)Program.Opcode.Disconnect);
 	}
 }
 
 public class Program
 {
-	public static FileStream OutFile;
+	// public static FileStream OutFile;
 	public static ManualResetEventSlim ExitHandle;
+	
+	public enum Opcode : byte
+	{
+		Connect = 0x01,
+		Data = 0x02,
+		Disconnect = 0x03
+	}
+
+	private static readonly FileStream _outStream;
+	public static readonly BinaryWriter DataWriter;
+
+	static Program()
+	{
+		var outFile = $"log-{DateTime.UtcNow.Ticks}.bin";
+		_outStream = new FileStream(outFile, FileMode.Create, FileAccess.Write, FileShare.Read,
+			4096, FileOptions.WriteThrough);
+		DataWriter = new BinaryWriter(_outStream);
+	}
 
 	public static void Main(string[] args)
 	{
-		OutFile = new FileStream("out.jsonl", FileMode.Append, FileAccess.Write, FileShare.Read);
+		// OutFile = new FileStream("out.jsonl", FileMode.Append, FileAccess.Write, FileShare.Read);
 
 		var cert = X509Certificate2.CreateFromPemFile(Path.Combine(args[1], "fullchain.pem"), Path.Combine(args[1], "privkey.pem"));
 
 		var wss = new WebSocketServer(IPAddress.Parse(args[0]), 7777, true)
 		{
+			KeepClean = false,
 			SslConfiguration =
 			{
+				EnabledSslProtocols = SslProtocols.Tls12,
 				ServerCertificate = new X509Certificate2(cert.Export(X509ContentType.Pkcs12))
 			}
 		};
@@ -248,6 +281,6 @@ public class Program
 		ExitHandle = new ManualResetEventSlim();
 		ExitHandle.Wait();
 
-		OutFile.Close();
+		// OutFile.Close();
 	}
 }
